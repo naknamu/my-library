@@ -60,5 +60,5 @@ function addMultipleBooks() {
     displayAllBook();
 }
 
-addMultipleBooks();
+// addMultipleBooks();
 
