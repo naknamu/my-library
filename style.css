@@ -7,9 +7,10 @@ body{
 .container{
     display: grid;
     grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr 8fr 1fr;
+    grid-template-rows: 1fr 15fr 1fr;
     font-family: 'Roboto', sans-serif;
     gap: 5px;
+    background-color: #f0f9ff;
 }
 
 .header{
@@ -24,28 +25,33 @@ body{
 
 .sidebar{
     background-color: #0ea5e9;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* display: grid; */
+    /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
     padding: 16px;
     border-radius: 32px;
 }
 
 .sidebar .title{
-    font-size: 24px;
-    text-align: center;
+    font-size: 26px;
+    place-self: center;
     font-weight: bold;
+    /* margin-bottom: 16px; */
+    /* color: rgb(199, 199, 199); */
 }
 
 .sidebar form{
     display: grid;
-    gap: 5px;
-    /* margin-top: 16px; */
+    gap: 24px;
 }
 
 .sidebar form label{
     font-weight: bold;
     font-size: 18px;
-    padding: 8px 0px 8px 0px;
+    /* padding: 0px 16px 0px 0px; */
+    display: inline-block;
+    width: 120px;
+    /* margin-bottom: 10px; */
+    /* text-align: right; */
 }
 
 .sidebar form input{
@@ -53,6 +59,8 @@ body{
     border-radius: 8px;
     border: 2px solid blue;
     font-size: 14px;
+    height: fit-content;
+    width: 90%;
 }
 
 .sidebar form input:focus{
@@ -60,10 +68,20 @@ body{
     border: 2px solid darkblue;
 }
 
+.sidebar form #pages{
+    width: 80px;
+}
+
+.sidebar form .book_overview{
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
 .sidebar form textarea{
     border: 2px solid blue;
     font-family: 'Roboto', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     padding: 8px;
     border-radius: 8px;
 }
@@ -73,29 +91,112 @@ body{
     border: 2px solid darkblue;
 }
 
+.sidebar form .status_question{
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.sidebar form input[type=radio]{
+    width: 20px;
+}
+
 .sidebar form button{
-    padding: 8px 32px;
+    padding: 16px 32px;
     border-radius: 8px;
     border: 2px solid blue;
     margin-top: 24px;
-    font-size: 16px;
+    font-size: 26px;
     font-weight: bold;
     background-color: #0284c7;
     color: white;
+    transition: 0.2s;
+}
+
+.sidebar form button:hover{
+    background-color: #075985;
+}
+
+.sidebar form button:active{
+    background-color: #0284c7;
 }
 
 .maincontent{
-    background-color: antiquewhite;
+    background-color: #075985;
     padding: 16px;
     display: grid;
     gap: 8px;
     grid-template-columns: repeat(2, 1fr);
+    border-radius: 32px;
 }
 
 .maincontent .card{
-    background-color: lightgreen;
+    background-color: #bae6fd;
     padding: 16px;
     display: grid;
+    place-items: center;
+    gap: 16px;
+    border-radius: 16px;
+}
+
+.maincontent .card img{
+    width: 300px;
+    max-height: 500px;
+    border: 5px solid #075985;
+    border-radius: 8px;
+}
+
+.maincontent .card .title{
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.maincontent .card .author,
+.maincontent .card .pages{
+    font-style: italic;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.maincontent .card .pages{
+}
+
+.maincontent .card .details{
+    border: 1px solid blue;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 8px;
+    width: 300px;
+    height: 150px;
+    overflow-y: scroll;
+}
+
+.maincontent .card button{
+    padding: 8px 24px;
+    border-radius: 4px;
+    border: 1px solid blue;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #0284c7;
+    color: white;
+    transition: 0.2s;
+}
+
+.maincontent .card button:hover{
+    background-color: #075985;
+}
+
+.maincontent .card button:active{
+    background-color: #0284c7;
+}
+
+.maincontent .card .buttons{
+    display: flex;
+    gap: 24px;
+}
+
+.maincontent .card .buttons .remove{
+    background-color: #ef4444;
 }
 
 .footer{
