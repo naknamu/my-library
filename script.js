@@ -89,3 +89,32 @@ function getFormData(){
         }
     }
 }
+
+//create new card element 
+function createCard(){
+    //locate container div
+    const maincontent = document.querySelector('.maincontent');
+    //create new div element with card as classname
+    const card = document.createElement('div');
+    card.classList.add('card');
+
+    //create elements inside the card
+    //image element
+    const book_image = document.createElement('img');
+    book_image.style.width = '300px';
+    book_image.style.maxHeight = '500px';
+    book_image.src = "images/harrypotter.jpg";
+    //title element
+    const book_title = document.createElement('div');
+    book_title.classList.add('title');
+    book_title.textContent = 'Dragon Ball Z';
+
+
+    maincontent.appendChild(card);
+    card.appendChild(book_image);
+    card.appendChild(book_title);
+
+    console.log(book_image);
+}
+
+createCard();
