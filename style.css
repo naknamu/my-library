@@ -68,11 +68,11 @@ body{
     border: 2px solid darkblue;
 }
 
-.sidebar form #pages{
+/* .sidebar form #pages{
     width: 80px;
-}
+} */
 
-.sidebar form .book_overview{
+.sidebar form .overview{
     font-weight: bold;
     font-size: 18px;
     margin-bottom: 10px;
