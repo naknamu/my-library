@@ -14,7 +14,7 @@
         <div class="header">My Library</div>
         <div class="sidebar">
             <!-- <div class="title">Add New Book</div> -->
-            <form onsubmit="getFormData(); return false">
+            <form onsubmit="getFormData(); return false" onkeydown="return event.key != 'Enter';">
                 <div class="title">Add New Book</div>
                 <div>
                     <label for="book_title">Title: </label>
