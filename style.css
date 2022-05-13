@@ -151,14 +151,12 @@ body{
     font-size: 24px;
 }
 
-.maincontent .card .author,
-.maincontent .card .pages{
+.maincontent .card .container-author-pages{
+    display: flex;
+    gap: 10px;
     font-style: italic;
     font-weight: bold;
     font-size: 16px;
-}
-
-.maincontent .card .pages{
 }
 
 .maincontent .card .details{

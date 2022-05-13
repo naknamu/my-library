@@ -108,11 +108,42 @@ function createCard(){
     const book_title = document.createElement('div');
     book_title.classList.add('title');
     book_title.textContent = 'Dragon Ball Z';
+    //container of author and pages
+    const container_author_pages = document.createElement('div');
+    container_author_pages.classList.add('container-author-pages');
+    //author
+    const book_author = document.createElement('div');
+    book_author.textContent = 'by ' + "Akira Toriyama" + ',';
+    //pages
+    const book_pages = document.createElement('div');
+    book_pages.textContent = '690' + ' Pages';
+    //overview
+    const book_overview = document.createElement('div');
+    book_overview.classList.add('details');
+    book_overview.textContent = 'lorem ipsum';
+    //container for buttons
+    const container_status_remove = document.createElement('div');
+    container_status_remove.classList.add('buttons');
+    //status button
+    const book_status = document.createElement('button');
+    book_status.classList.add('status');
+    book_status.textContent = 'Not READ';
+    //remove button
+    const book_remove = document.createElement('button');
+    book_remove.classList.add('remove');
+    book_remove.textContent = "REMOVE";
 
 
     maincontent.appendChild(card);
     card.appendChild(book_image);
     card.appendChild(book_title);
+    card.appendChild(container_author_pages);
+    container_author_pages.appendChild(book_author);
+    container_author_pages.appendChild(book_pages);
+    card.appendChild(book_overview);
+    card.appendChild(container_status_remove);
+    container_status_remove.appendChild(book_status);
+    container_status_remove.appendChild(book_remove);
 
     console.log(book_image);
 }
