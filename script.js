@@ -62,3 +62,30 @@ function addMultipleBooks() {
 
 // addMultipleBooks();
 
+
+//store each input data in the form into a corresponding variable
+function getFormData(){
+    let user_input_title = document.querySelector("#book_title");
+    let user_input_author = document.querySelector("#book_author");
+    let user_input_pages = document.querySelector('#book_pages');
+    let user_input_overview = document.querySelector('#book_overview');
+    let user_input_status = document.getElementsByName('read_status');
+
+    console.log(user_input_title.value);
+    console.log(user_input_author.value);
+    console.log(user_input_pages.value);
+    console.log(user_input_overview.value);
+    //
+    for (let i=0, length = user_input_status.length; i<length; i++){
+        if (user_input_status[i].checked) {
+            if (user_input_status[i].id == 'read_yes'){
+                console.log("yes");
+            }
+            else{
+                console.log("no");
+            }
+            // only one radio can be logically checked, don't check the rest
+            break;
+        }
+    }
+}
