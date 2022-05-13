@@ -183,7 +183,7 @@ body{
 }
 
 .maincontent .card button:hover{
-    background-color: #075985;
+    background-color: #0c4a6e;
 }
 
 .maincontent .card button:active{
@@ -199,8 +199,17 @@ body{
     background-color: #ef4444;
 }
 
+.maincontent .card .buttons .remove:hover{
+    background-color: #991b1b;
+}
+
+.maincontent .card .buttons .remove:active{
+    background-color: #ef4444;
+}
+
+
 .footer{
-    background-color: lightblue;
+    background-color: #075985;
     grid-column: 1 / 3;
     font-size: 12px;
     font-weight: bold;
