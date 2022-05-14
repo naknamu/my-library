@@ -88,10 +88,13 @@ function getFormData(){
             break;
         }
     }
+
+    //create new card from the form
+    createCard(user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value);
 }
 
 //create new card element 
-function createCard(){
+function createCard(title, author, pages, overview){
     //locate container div
     const maincontent = document.querySelector('.maincontent');
     //create new div element with card as classname
@@ -107,20 +110,24 @@ function createCard(){
     //title element
     const book_title = document.createElement('div');
     book_title.classList.add('title');
-    book_title.textContent = 'Dragon Ball Z';
+    // book_title.textContent = 'Dragon Ball Z';
+    book_title.textContent = title;
     //container of author and pages
     const container_author_pages = document.createElement('div');
     container_author_pages.classList.add('container-author-pages');
     //author
     const book_author = document.createElement('div');
-    book_author.textContent = 'by ' + "Akira Toriyama" + ',';
+    // book_author.textContent = 'by ' + "Akira Toriyama" + ',';
+    book_author.textContent = 'by ' + author + ',';
     //pages
     const book_pages = document.createElement('div');
-    book_pages.textContent = '690' + ' Pages';
+    // book_pages.textContent = '690' + ' Pages';
+    book_pages.textContent = pages + ' Pages';
     //overview
     const book_overview = document.createElement('div');
     book_overview.classList.add('details');
-    book_overview.textContent = 'lorem ipsum';
+    // book_overview.textContent = 'lorem ipsum';
+    book_overview.textContent = overview;
     //container for buttons
     const container_status_remove = document.createElement('div');
     container_status_remove.classList.add('buttons');
@@ -145,7 +152,7 @@ function createCard(){
     container_status_remove.appendChild(book_status);
     container_status_remove.appendChild(book_remove);
 
-    console.log(book_image);
+    // console.log(book_image);
 }
 
-createCard();
+// createCard();
