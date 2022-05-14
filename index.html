@@ -17,6 +17,10 @@
             <form onsubmit="getFormData(); return false" onkeydown="return event.key != 'Enter';">
                 <div class="title">Add New Book</div>
                 <div>
+                    <label for="book_image">Upload Image:</label>
+                    <input type="file" name="book_image" id="book_image">
+                </div>
+                <div>
                     <label for="book_title">Title: </label>
                     <input type="text" name="book_title" id="book_title">
                 </div>
