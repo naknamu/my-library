@@ -60,17 +60,30 @@ function addMultipleBooks() {
     displayAllBook();
 }
 
-// addMultipleBooks();
+//preview image upload
+function previewImage(){
+    let img = document.querySelector('#img-test');
+    let preview_image = document.querySelector('#book_image');
+    let fReader = new FileReader();
+    fReader.readAsDataURL(preview_image.files[0]);
+    fReader.onloadend = function(event){
+        img.src = event.target.result;
+        // console.log(img.src);
+    }
+    return img.src;
+}
 
 
 //store each input data in the form into a corresponding variable
 function getFormData(){
+    let user_input_image = previewImage();
     let user_input_title = document.querySelector("#book_title");
     let user_input_author = document.querySelector("#book_author");
     let user_input_pages = document.querySelector('#book_pages');
     let user_input_overview = document.querySelector('#book_overview');
     let user_input_status = document.getElementsByName('read_status');
 
+    console.log(user_input_image);
     console.log(user_input_title.value);
     console.log(user_input_author.value);
     console.log(user_input_pages.value);
@@ -90,11 +103,11 @@ function getFormData(){
     }
 
     //create new card from the form
-    createCard(user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value);
+    createCard(user_input_image ,user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value);
 }
 
 //create new card element 
-function createCard(title, author, pages, overview){
+function createCard(image, title, author, pages, overview){
     //locate container div
     const maincontent = document.querySelector('.maincontent');
     //create new div element with card as classname
@@ -106,7 +119,8 @@ function createCard(title, author, pages, overview){
     const book_image = document.createElement('img');
     book_image.style.width = '300px';
     book_image.style.maxHeight = '500px';
-    book_image.src = "images/harrypotter.jpg";
+    // book_image.src = "images/harrypotter.jpg";
+    book_image.src = image;
     //title element
     const book_title = document.createElement('div');
     book_title.classList.add('title');
@@ -140,7 +154,7 @@ function createCard(title, author, pages, overview){
     book_remove.classList.add('remove');
     book_remove.textContent = "REMOVE";
 
-
+    //add to parent div
     maincontent.appendChild(card);
     card.appendChild(book_image);
     card.appendChild(book_title);
@@ -152,7 +166,4 @@ function createCard(title, author, pages, overview){
     container_status_remove.appendChild(book_status);
     container_status_remove.appendChild(book_remove);
 
-    // console.log(book_image);
 }
-
-// createCard();
