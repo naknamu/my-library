@@ -83,19 +83,19 @@ function getFormData(){
     let user_input_overview = document.querySelector('#book_overview');
     let user_input_status = document.getElementsByName('read_status');
 
-    console.log(user_input_image);
-    console.log(user_input_title.value);
-    console.log(user_input_author.value);
-    console.log(user_input_pages.value);
-    console.log(user_input_overview.value);
+    // console.log(user_input_image);
+    // console.log(user_input_title.value);
+    // console.log(user_input_author.value);
+    // console.log(user_input_pages.value);
+    // console.log(user_input_overview.value);
     //
     for (let i=0, length = user_input_status.length; i<length; i++){
         if (user_input_status[i].checked) {
             if (user_input_status[i].id == 'read_yes'){
-                console.log("yes");
+                // console.log("yes");
             }
             else{
-                console.log("no");
+                // console.log("no");
             }
             // only one radio can be logically checked, don't check the rest
             break;
@@ -153,6 +153,10 @@ function createCard(image, title, author, pages, overview){
     const book_remove = document.createElement('button');
     book_remove.classList.add('remove');
     book_remove.textContent = "REMOVE";
+    //add event listener on button click
+    book_remove.addEventListener('click', () => {
+        card.remove();
+    })
 
     //add to parent div
     maincontent.appendChild(card);
@@ -167,3 +171,4 @@ function createCard(image, title, author, pages, overview){
     container_status_remove.appendChild(book_remove);
 
 }
+
