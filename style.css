@@ -7,7 +7,7 @@ body{
 .container{
     display: grid;
     grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr 15fr 1fr;
+    grid-template-rows: 100px 1fr 100px;
     font-family: 'Roboto', sans-serif;
     gap: 5px;
     background-color: #f0f9ff;
