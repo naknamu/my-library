@@ -18,7 +18,7 @@
                 <div class="title">Add New Book</div>
                 <div>
                     <label for="book_image">Upload Image:</label>
-                    <input type="file" name="book_image" id="book_image" onchange="previewImage()">
+                    <input type="file" name="book_image" id="book_image" onchange="previewImage()" required>
                     <img id="img-test" alt="preview-image">
                 </div>
                 <div>
@@ -33,7 +33,7 @@
                 
                 <div>
                     <label for="book_pages">No. of Pages: </label>
-                    <input type="number" name="book_pages" id="book_pages">
+                    <input type="number" name="book_pages" id="book_pages" required>
                 </div>
                 
                 <div>
@@ -44,10 +44,10 @@
                 <div>
                     <div class="status_question">Have you read this book?</div>
                     <div>
-                        <input type="radio" name="read_status" id="read_yes">
+                        <input type="radio" name="read_status" id="read_yes" required>
                         <label for="read_yes">YES</label>
     
-                        <input type="radio" name="read_status" id="read_no">
+                        <input type="radio" name="read_status" id="read_no" required>
                         <label for="read_no">NO</label>
                     </div>
                 </div>
@@ -57,22 +57,6 @@
         </div>
         <div class="maincontent">
             <!-- <div class="card">
-                <img src="images/harrypotter.jpg" alt="HP-img">
-                <div class="title">Harry Potter</div>
-                <div class="container-author-pages">
-                    <div>by JK Rowling,</div>
-                    <div>350 Pages</div>
-                </div>
-                <div class="details">The novels chronicle the lives of a young wizard, Harry Potter, 
-                    and his friends Hermione Granger and Ron Weasley, 
-                    all of whom are students at Hogwarts School of Witchcraft and Wizardry.
-                </div>
-                <div class="buttons">
-                    <button class="status">Not READ</button>
-                    <button class="remove">Remove</button>
-                </div>
-            </div>
-            <div class="card">
                 <img src="images/naruto.jpg" alt="naruto-img">
                 <div class="title">Naruto</div>
                 <div>
@@ -81,36 +65,6 @@
                 <div class="details"> It tells the story of Naruto Uzumaki, 
                     a young ninja who seeks recognition from his peers and dreams of becoming the Hokage, 
                     the leader of his village.
-                </div>
-                <div class="buttons">
-                    <button class="status">Not READ</button>
-                    <button class="remove">Remove</button>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/onepiece.jpg" alt="onepiece-img">
-                <div class="title">One Piece</div>
-                <div>
-                    <div>by <span class="author">Eiichiro Oda</span>, <span class="pages">1000+</span> pages</div>
-                </div>
-                <div class="details">Follows the adventures of Monkey D. Luffy and 
-                    his pirate crew in order to find the greatest treasure ever left by the legendary Pirate, Gold Roger.
-                </div>
-                <div class="buttons">
-                    <button class="status">Not READ</button>
-                    <button class="remove">Remove</button>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/attack-on-titan.jpg" alt="attackontitan-img">
-                <div class="title">Attack On Titan</div>
-                <div>
-                    <div>by <span class="author">Hajime Isayama</span>, <span class="pages">250</span> pages</div>
-                </div>
-                <div class="details"> It is set in a world where humanity is forced to live in cities surrounded by 
-                    three enormous walls that protect them from gigantic man-eating humanoids referred to as Titans; 
-                    the story follows Eren Yeager, who vows to exterminate the 
-                    Titans after they bring about the destruction of his hometown and the death of his mother.
                 </div>
                 <div class="buttons">
                     <button class="status">Not READ</button>
