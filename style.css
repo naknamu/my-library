@@ -25,8 +25,6 @@ body{
 
 .sidebar{
     background-color: #0ea5e9;
-    /* display: grid; */
-    /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
     padding: 16px;
     border-radius: 32px;
 }
@@ -129,7 +127,8 @@ body{
     padding: 16px;
     display: grid;
     gap: 8px;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     border-radius: 32px;
 }
 
