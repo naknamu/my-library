@@ -89,13 +89,15 @@ function getFormData(){
     // console.log(user_input_pages.value);
     // console.log(user_input_overview.value);
     //
+    let input_status;
     for (let i=0, length = user_input_status.length; i<length; i++){
         if (user_input_status[i].checked) {
             if (user_input_status[i].id == 'read_yes'){
                 // console.log("yes");
+                input_status = 'yes';
             }
             else{
-                // console.log("no");
+                input_status = 'no';
             }
             // only one radio can be logically checked, don't check the rest
             break;
@@ -103,11 +105,11 @@ function getFormData(){
     }
 
     //create new card from the form
-    createCard(user_input_image ,user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value);
+    createCard(user_input_image ,user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value, input_status);
 }
 
 //create new card element 
-function createCard(image, title, author, pages, overview){
+function createCard(image, title, author, pages, overview, status){
     //locate container div
     const maincontent = document.querySelector('.maincontent');
     //create new div element with card as classname
@@ -148,7 +150,39 @@ function createCard(image, title, author, pages, overview){
     //status button
     const book_status = document.createElement('button');
     book_status.classList.add('status');
-    book_status.textContent = 'Not READ';
+    //condition to check book status
+    if (status == 'yes'){
+        book_status.textContent = 'READ';
+        book_status.style.backgroundColor = '#0284c7';
+    } else {
+        book_status.textContent = 'Not READ';
+        book_status.style.backgroundColor = '#0c4a6e';
+    }
+    //change book status upon click
+    book_status.addEventListener('click', () => {
+        if (book_status.textContent == 'READ'){
+            book_status.textContent = 'Not READ';
+            book_status.style.backgroundColor = '#0c4a6e';
+        } else {
+            book_status.textContent = 'READ';
+            book_status.style.backgroundColor = '#0284c7';
+        }
+    })
+    //change book status bg color upon mouse hover
+    book_status.addEventListener('mouseover', () => {
+        if (book_status.textContent == 'READ'){
+            book_status.style.backgroundColor = '#0c4a6e';
+        } else {
+            book_status.style.backgroundColor = '#0284c7';
+        }
+    })
+    book_status.addEventListener('mouseout', () => {
+        if(book_status.textContent == 'READ'){
+            book_status.style.backgroundColor = '#0284c7';
+        } else {
+            book_status.style.backgroundColor = '#0c4a6e';
+        }
+    })
     //remove button
     const book_remove = document.createElement('button');
     book_remove.classList.add('remove');
