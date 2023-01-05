@@ -1,3 +1,6 @@
+import './style.css';
+
+
 //constructor
 function Book(title, author, pages, read) {
     this.title = title;
@@ -65,13 +68,33 @@ function previewImage(){
     let img = document.querySelector('#img-test');
     let preview_image = document.querySelector('#book_image');
     let fReader = new FileReader();
-    fReader.readAsDataURL(preview_image.files[0]);
-    fReader.onloadend = function(event){
-        img.src = event.target.result;
-        // console.log(img.src);
+    // if (preview_image.files[0] === undefined) {
+    //     throw console.error('Image is required!');
+    // } else {
+    //     fReader.readAsDataURL(preview_image.files[0]);
+    //     fReader.onloadend = function(event){
+    //         img.src = event.target.result;
+    //     }
+    // }
+
+    try {
+        fReader.readAsDataURL(preview_image.files[0]);
+        fReader.onloadend = function(event){
+            img.src = event.target.result;
+        }
+    } catch (error) {
+        // alert('Book image is required!');
+        console.log(error);
     }
+
     return img.src;
 }
+
+//when using webpack
+document.querySelector('#book_image').addEventListener('change', () => {
+    //Preview image uploaded
+    previewImage();
+})
 
 
 //store each input data in the form into a corresponding variable
@@ -103,10 +126,21 @@ function getFormData(){
             break;
         }
     }
+    if (user_input_image === "" || user_input_title.value === "" || user_input_author.value === "" || user_input_pages.value === "" || user_input_overview.value === "" || input_status === undefined) {
+        alert('Fill all empty fields!');
+    } else {
+        //create new card from the form
+        createCard(user_input_image ,user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value, input_status);
+    }
 
-    //create new card from the form
-    createCard(user_input_image ,user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value, input_status);
 }
+
+//when using webpack
+document.querySelector('#submit-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    //submit data
+    getFormData();
+})
 
 //create new card element 
 function createCard(image, title, author, pages, overview, status){

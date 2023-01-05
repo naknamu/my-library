@@ -1,0 +1,30 @@
+{
+  "name": "library-fb",
+  "version": "1.0.0",
+  "description": "Vanilla JS app using firebase for backend",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=development",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naknamu/my-library.git"
+  },
+  "author": "naknamu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/naknamu/my-library/issues"
+  },
+  "homepage": "https://github.com/naknamu/my-library#readme",
+  "devDependencies": {
+    "css-loader": "^6.7.3",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "firebase": "^9.15.0"
+  }
+}

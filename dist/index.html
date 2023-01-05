@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Library</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <script src="bundle.js" defer></script>
 </head>
 <body>
 
@@ -14,11 +14,13 @@
         <div class="header">My Library</div>
         <div class="sidebar">
             <!-- <div class="title">Add New Book</div> -->
-            <form onsubmit="getFormData(); return false" onkeydown="return event.key != 'Enter';">
+            <!-- <form onsubmit="getFormData(); return false" onkeydown="return event.key != 'Enter';"> -->
+            <form onkeydown="return event.key != 'Enter';">
                 <div class="title">Add New Book</div>
                 <div>
                     <label for="book_image">Upload Image:</label>
-                    <input type="file" name="book_image" id="book_image" onchange="previewImage()" required>
+                    <!-- <input type="file" name="book_image" id="book_image" onchange="previewImage()" required> -->
+                    <input type="file" name="book_image" id="book_image" required>
                     <img id="img-test" alt="preview-image">
                 </div>
                 <div>
@@ -52,7 +54,7 @@
                     </div>
                 </div>
 
-                <button type="submit">Add Book</button>
+                <button type="submit" id="submit-btn">Add Book</button>
             </form>  
         </div>
         <div class="maincontent">
