@@ -1,5 +1,7 @@
 import './style.css';
-
+import './firebase';
+import db from './firebase';
+import { collection, addDoc } from "firebase/firestore";
 
 //constructor
 function Book(title, author, pages, read) {
@@ -127,10 +129,12 @@ function getFormData(){
         }
     }
     if (user_input_image === "" || user_input_title.value === "" || user_input_author.value === "" || user_input_pages.value === "" || user_input_overview.value === "" || input_status === undefined) {
-        alert('Fill all empty fields!');
+        // alert('Fill all empty fields!');
     } else {
         //create new card from the form
         createCard(user_input_image ,user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value, input_status);
+        //SEND DATA TO CLOUD FIRESTORE DATABASE
+        sendDataDatabase(user_input_image, user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value, input_status);
     }
 
 }
@@ -239,4 +243,22 @@ function createCard(image, title, author, pages, overview, status){
     container_status_remove.appendChild(book_remove);
 
 }
+
+//FIREBASE
+async function sendDataDatabase(image, title, author, pages, overview, status) {
+    try {
+    const docRef = await addDoc(collection(db, "books"), {
+        ImageSrc: image,
+        Title: title,
+        Author: author,
+        Pages: pages,
+        Overview: overview,
+        Status: status
+    });
+    console.log("Document written with ID: ", docRef.id );
+    } catch(e) {
+        console.log("Error adding document: ", e);
+    }
+}
+
 
