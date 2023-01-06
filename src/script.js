@@ -1,71 +1,9 @@
 import './style.css';
 import './firebase';
 import db from './firebase';
-import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection, addDoc, getDocs, deleteDoc, doc, setDoc } from "firebase/firestore";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-
-//constructor
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}
-
-Book.prototype.info = function() {
-    return this.title + " by " + this.author + ", " + this.pages + " pages" + " ," + this.read;
-}
-
-const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", '295', 'not read yet');
-
-// console.log(theHobbit.info());
-
-let addBook = true;
-function addBookToLibrary() {
-    //function that can take user input 
-    let bookTitle = prompt("Enter the book title: ", "");
-    let bookAuthor = prompt("Who is the author: ", '');
-    let bookPages = prompt("Number of pages: ", "");
-    let bookRead = prompt("Have you read this book?: ", '');
-    addBook = confirm("Add another book?");
-
-    //add all user inputs to the constructor
-    const newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
-
-    //prints new Book object to the console
-    // console.log(newBook.info());
-
-    //store the new book objects into an array
-    myLibrary.push(newBook);
-
-    return addBook;
-}
-
-//array where all of book objects are stored
-let myLibrary = [];
-
-
-//function that loops through the array and displays each book on the page
-function displayAllBook() {
-    for (let i=0; i<myLibrary.length; i++)
-    {
-        console.log(myLibrary[i]);
-    }
-}
-
-// addBookToLibrary();
-// displayAllBook();
-
-//function to add multiple books to the library
-//and prints at the end
-function addMultipleBooks() {
-    while (addBook) {
-        addBookToLibrary();
-    }
-
-    displayAllBook();
-}
 
 //preview image upload
 function previewImage(){
@@ -102,17 +40,10 @@ function getFormData(){
     let user_input_overview = document.querySelector('#book_overview');
     let user_input_status = document.getElementsByName('read_status');
 
-    // console.log(user_input_image);
-    // console.log(user_input_title.value);
-    // console.log(user_input_author.value);
-    // console.log(user_input_pages.value);
-    // console.log(user_input_overview.value);
-    //
     let input_status;
     for (let i=0, length = user_input_status.length; i<length; i++){
         if (user_input_status[i].checked) {
             if (user_input_status[i].id == 'read_yes'){
-                // console.log("yes");
                 input_status = 'yes';
             }
             else{
@@ -122,13 +53,12 @@ function getFormData(){
             break;
         }
     }
-    // if (user_input_image === "" || user_input_title.value === "" || user_input_author.value === "" || user_input_pages.value === "" || user_input_overview.value === "" || input_status === undefined) {
-        if (user_input_image === "") {
-        // alert('Fill all empty fields!');
+    if (user_input_image === "" || user_input_title.value === "" || user_input_author.value === "" || user_input_pages.value === "" || user_input_overview.value === "" || input_status === undefined) {
+        alert('Fill all empty fields!');
     } else {
         //SEND DATA TO CLOUD FIRESTORE DATABASE
-        // let docRef_id = sendDataDatabase(user_input_image, user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value, input_status);
-        let docRef_id = sendDataDatabase(user_input_image);
+        let docRef_id = sendDataDatabase(user_input_image, user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value, input_status);
+        // let docRef_id = sendDataDatabase(user_input_image);
 
         //create new card from the form
         createCard(user_input_image ,user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value, input_status, docRef_id);
@@ -153,9 +83,15 @@ async function createCard(image, title, author, pages, overview, status, id){
     const card = document.createElement('div');
     card.classList.add('card');
     //attach document referent id as card id
-    id.then(function (res) {
-        card.id = res;
-    });
+    //try if doc id is a promise, if not assigned doc id to card id immediately
+    try {
+        id.then(function (res) {
+            card.id = res;
+        });
+    } catch(error) {
+        console.log(error);
+        card.id = id;
+    }
 
     //create elements inside the card
     //image element
@@ -251,20 +187,26 @@ async function createCard(image, title, author, pages, overview, status, id){
 }
 
 //STORE DATA TO CLOUD FIREBASE
-// async function sendDataDatabase(image, title, author, pages, overview, status) {
-async function sendDataDatabase(image) {
+async function sendDataDatabase(image, title, author, pages, overview, status) {
+
     try {
-    const docRef = await addDoc(collection(db, "books"), {
-        ImageSrc: image,
-        // Title: title,
-        // Author: author,
-        // Pages: pages,
-        // Overview: overview,
-        // Status: status, 
-        TimeCreated : firebase.firestore.FieldValue.serverTimestamp(),
-    });
-    console.log("Document written with ID: ", docRef.id );
-    return docRef.id;
+        const docRef = doc (collection(db, "books"));
+        await setDoc(
+            docRef,
+            {
+                ImageSrc: image,
+                Title: title,
+                Author: author,
+                Pages: pages,
+                Overview: overview,
+                Status: status, 
+                TimeCreated : firebase.firestore.FieldValue.serverTimestamp(),
+                id: docRef.id
+            }
+        )
+        console.log("Document written with ID: ", docRef.id );
+        return docRef.id;
+
     } catch(e) {
         console.log("Error adding document: ", e);
     }
@@ -272,24 +214,22 @@ async function sendDataDatabase(image) {
 
 //get project data from CLOUD FIRESTORE even if the page is refreshed or closed
 const pageRefreshed = window.onload = async function () {
-    console.log('page is refreshed!');
 
     let bookArray = [];
 
     //get data 
     const queryBookRecords = await getDocs(collection(db, "books"));
     queryBookRecords.forEach((doc) => {
-
         bookArray.push(doc.data());
     })
 
     bookArray.forEach((book) => {
-        // console.log(book);
         //create new card from the form
-        // createCard( book.ImageSrc , book.Title , book.Author , book.Pages, book.Overview , book.Status);
+        createCard( book.ImageSrc , book.Title , book.Author , book.Pages, book.Overview , book.Status, book.id);
     })
 
 }
+
 
 //Delete Document in Cloud Firestore
 async function deleteDocumentFirebase(docID) {
