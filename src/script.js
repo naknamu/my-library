@@ -1,7 +1,9 @@
 import './style.css';
 import './firebase';
 import db from './firebase';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 
 //constructor
 function Book(title, author, pages, read) {
@@ -70,14 +72,6 @@ function previewImage(){
     let img = document.querySelector('#img-test');
     let preview_image = document.querySelector('#book_image');
     let fReader = new FileReader();
-    // if (preview_image.files[0] === undefined) {
-    //     throw console.error('Image is required!');
-    // } else {
-    //     fReader.readAsDataURL(preview_image.files[0]);
-    //     fReader.onloadend = function(event){
-    //         img.src = event.target.result;
-    //     }
-    // }
 
     try {
         fReader.readAsDataURL(preview_image.files[0]);
@@ -128,13 +122,16 @@ function getFormData(){
             break;
         }
     }
-    if (user_input_image === "" || user_input_title.value === "" || user_input_author.value === "" || user_input_pages.value === "" || user_input_overview.value === "" || input_status === undefined) {
+    // if (user_input_image === "" || user_input_title.value === "" || user_input_author.value === "" || user_input_pages.value === "" || user_input_overview.value === "" || input_status === undefined) {
+        if (user_input_image === "") {
         // alert('Fill all empty fields!');
     } else {
-        //create new card from the form
-        createCard(user_input_image ,user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value, input_status);
         //SEND DATA TO CLOUD FIRESTORE DATABASE
-        sendDataDatabase(user_input_image, user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value, input_status);
+        // let docRef_id = sendDataDatabase(user_input_image, user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value, input_status);
+        let docRef_id = sendDataDatabase(user_input_image);
+
+        //create new card from the form
+        createCard(user_input_image ,user_input_title.value, user_input_author.value, user_input_pages.value, user_input_overview.value, input_status, docRef_id);
     }
 
 }
@@ -147,12 +144,18 @@ document.querySelector('#submit-btn').addEventListener('click', (e) => {
 })
 
 //create new card element 
-function createCard(image, title, author, pages, overview, status){
+async function createCard(image, title, author, pages, overview, status, id){
+
     //locate container div
     const maincontent = document.querySelector('.maincontent');
+
     //create new div element with card as classname
     const card = document.createElement('div');
     card.classList.add('card');
+    //attach document referent id as card id
+    id.then(function (res) {
+        card.id = res;
+    });
 
     //create elements inside the card
     //image element
@@ -228,6 +231,9 @@ function createCard(image, title, author, pages, overview, status){
     //add event listener on button click
     book_remove.addEventListener('click', () => {
         card.remove();
+        //delete document in CLOUD FIRESTORE using card id
+        console.log(card.id);
+        deleteDocumentFirebase(card.id);
     })
 
     //add to parent div
@@ -244,21 +250,49 @@ function createCard(image, title, author, pages, overview, status){
 
 }
 
-//FIREBASE
-async function sendDataDatabase(image, title, author, pages, overview, status) {
+//STORE DATA TO CLOUD FIREBASE
+// async function sendDataDatabase(image, title, author, pages, overview, status) {
+async function sendDataDatabase(image) {
     try {
     const docRef = await addDoc(collection(db, "books"), {
         ImageSrc: image,
-        Title: title,
-        Author: author,
-        Pages: pages,
-        Overview: overview,
-        Status: status
+        // Title: title,
+        // Author: author,
+        // Pages: pages,
+        // Overview: overview,
+        // Status: status, 
+        TimeCreated : firebase.firestore.FieldValue.serverTimestamp(),
     });
     console.log("Document written with ID: ", docRef.id );
+    return docRef.id;
     } catch(e) {
         console.log("Error adding document: ", e);
     }
 }
 
+//get project data from CLOUD FIRESTORE even if the page is refreshed or closed
+const pageRefreshed = window.onload = async function () {
+    console.log('page is refreshed!');
+
+    let bookArray = [];
+
+    //get data 
+    const queryBookRecords = await getDocs(collection(db, "books"));
+    queryBookRecords.forEach((doc) => {
+
+        bookArray.push(doc.data());
+    })
+
+    bookArray.forEach((book) => {
+        // console.log(book);
+        //create new card from the form
+        // createCard( book.ImageSrc , book.Title , book.Author , book.Pages, book.Overview , book.Status);
+    })
+
+}
+
+//Delete Document in Cloud Firestore
+async function deleteDocumentFirebase(docID) {
+    const deletedDoc = await deleteDoc(doc (db, "books", docID));
+}
 
