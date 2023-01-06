@@ -1,7 +1,7 @@
 import './style.css';
 import './firebase';
 import db from './firebase';
-import { collection, addDoc, getDocs, deleteDoc, doc, setDoc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, setDoc, updateDoc } from "firebase/firestore";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 
@@ -140,9 +140,13 @@ async function createCard(image, title, author, pages, overview, status, id){
         if (book_status.textContent == 'READ'){
             book_status.textContent = 'Not READ';
             book_status.style.backgroundColor = '#0c4a6e';
+            //update status field in CLOUD FIRESTORE
+            changeBookStatusField(card.id, "no");
         } else {
             book_status.textContent = 'READ';
             book_status.style.backgroundColor = '#0284c7';
+            //update status field in CLOUD FIRESTORE
+            changeBookStatusField(card.id, "yes");
         }
     })
     //change book status bg color upon mouse hover
@@ -236,3 +240,11 @@ async function deleteDocumentFirebase(docID) {
     const deletedDoc = await deleteDoc(doc (db, "books", docID));
 }
 
+//Change book status in CLOUD Firestore Database
+async function changeBookStatusField(docID, status) {
+    const updateBookStatus = doc (db, "books", docID);
+    //set the status
+    await updateDoc(updateBookStatus, {
+        Status: status
+    });
+}
