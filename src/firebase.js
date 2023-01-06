@@ -1,9 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-// import { collection, addDoc } from "firebase/firestore";
 
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://firebase.google.com/docs/web/learn-more#config-object
 const firebaseConfig = {
     apiKey: "AIzaSyANa1SMpeifgc5ljTC08GL_k8Aoc_sUfkQ",
     authDomain: "library-6224e.firebaseapp.com",
@@ -21,14 +18,3 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export default db;
-
-// try {
-//     const docRef = await addDoc(collection(db, "users"), {
-//         first: "Naruto",
-//         last: "Uzumaki",
-//         born: 1801
-//     });
-//     console.log("Document written with ID: ", docRef.id );
-// } catch(e) {
-//     console.log("Error adding document: ", e);
-// }

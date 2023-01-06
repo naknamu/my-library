@@ -17,7 +17,6 @@ function previewImage(){
             img.src = event.target.result;
         }
     } catch (error) {
-        // alert('Book image is required!');
         console.log(error);
     }
 
@@ -172,7 +171,6 @@ async function createCard(image, title, author, pages, overview, status, id){
     book_remove.addEventListener('click', () => {
         card.remove();
         //delete document in CLOUD FIRESTORE using card id
-        console.log(card.id);
         deleteDocumentFirebase(card.id);
     })
 
